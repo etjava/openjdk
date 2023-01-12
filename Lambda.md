@@ -301,5 +301,106 @@ class字节码
 
 ![image](https://user-images.githubusercontent.com/47961027/212056415-001d0829-3f7d-4ef5-b1b2-19e7e7375d0c.png)
 
+### Lambda运行原理刨析
+
+源码
+
+```java
+public class Demo3 {
+
+	public static void main(String[] args) {
+		swimming(()->{
+			System.out.println("Lambda表达式方式实现swimming方法");
+		});
+	}
+	
+	public static void swimming(Swimmable s) {
+		s.swimming();
+	}
+}
+```
+
+class字节码
+
+会发现lambda表达式并没有生成匿名内部类的字节码文件
+
+![image-20230112194044776](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112194044776.png)
+
+没有生成匿名内部类的字节码文件 可以使用javap指令查看字节码文件
+
+```
+javap -c -p Demo3.class
+-c 表示对代码进行反汇编
+-p 显示所有的类和成员
+```
+
+反编译后如下
+
+```java
+C:\Users\etjav\Desktop\springcloud\JDK8\bin\com\etjava\test>javap -c -p Demo3.class
+Compiled from "Demo3.java"
+public class com.etjava.test.Demo3 {
+  public com.etjava.test.Demo3();
+    Code:
+       0: aload_0
+       1: invokespecial #8                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: invokedynamic #16,  0             // InvokeDynamic #0:swimming:()Lcom/etjava/lambda/Swimmable;
+       5: invokestatic  #20                 // Method swimming:(Lcom/etjava/lambda/Swimmable;)V
+       8: return
+
+  public static void swimming(com.etjava.lambda.Swimmable);
+    Code:
+       0: aload_0
+       1: invokeinterface #25,  1           // InterfaceMethod com/etjava/lambda/Swimmable.swimming:()V
+       6: return
+  // 自动生成了一个lambda$0 私有静态方法
+  private static void lambda$0();
+    Code:
+       0: getstatic     #32                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: ldc           #38                 // String Lambda表达式方式实现swimming方法
+       5: invokevirtual #40                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       8: return
+}
+```
+
+private static void lambda$0(); 什么时候被调用？
+
+Lambda在运行时会生成一个内部类
+
+可通过java -Djdk.internal.lambda.dumpProxyClasses 将运行时生成的内部类class字节码输出到指定的文件中
+
+```
+java -Djdk.internal.lambda.dumpProxyClasses 包名.类名
+```
+
+注意： 运行时需要退出到根目录下进行运行
+
+![image-20230112195415133](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112195415133.png)
+
+运行后会发现生成了一个匿名内部类
+
+![image-20230112195457082](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112195457082.png)
+
+```java
+C:\Users\etjav\Desktop\springcloud\JDK8\bin\com\etjava\test>javap -c -p Demo3$$Lambda$1.class
+// lambda在运行时会生成yi
+final class com.etjava.test.Demo3$$Lambda$1 implements com.etjava.lambda.Swimmable {
+  private com.etjava.test.Demo3$$Lambda$1();
+    Code:
+       0: aload_0
+       1: invokespecial #10                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public void swimming();
+    Code:
+       0: invokestatic  #17                 // Method com/etjava/test/Demo3.lambda$0:()V
+       3: return
+}
+```
+
 
 
