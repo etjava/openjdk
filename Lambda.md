@@ -297,6 +297,9 @@ public class Demo3 {
 
 class字节码
 
-![image-20230112192032032](C:\Users\etjav\Desktop\image-20230112192032032.png)
+![image](https://user-images.githubusercontent.com/47961027/212056525-f38809f3-d916-44aa-a6b6-867408c6bc39.png)
 
-![image-20230112193156996](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112193156996.png)
+![image](https://user-images.githubusercontent.com/47961027/212056415-001d0829-3f7d-4ef5-b1b2-19e7e7375d0c.png)
+
+
+
