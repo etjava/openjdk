@@ -324,7 +324,7 @@ class字节码
 
 会发现lambda表达式并没有生成匿名内部类的字节码文件
 
-![image-20230112194044776](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112194044776.png)
+![image](https://user-images.githubusercontent.com/47961027/212061390-f691d111-7453-45a2-8a37-5c40e1d90541.png)
 
 没有生成匿名内部类的字节码文件 可以使用javap指令查看字节码文件
 
@@ -379,11 +379,12 @@ java -Djdk.internal.lambda.dumpProxyClasses 包名.类名
 
 注意： 运行时需要退出到根目录下进行运行
 
-![image-20230112195415133](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112195415133.png)
+![image](https://user-images.githubusercontent.com/47961027/212061313-68ff3b88-a276-42c2-9fa5-843505d71a1a.png)
 
 运行后会发现生成了一个匿名内部类
 
-![image-20230112195457082](C:\Users\etjav\AppData\Roaming\Typora\typora-user-images\image-20230112195457082.png)
+![image](https://user-images.githubusercontent.com/47961027/212061175-225a9778-aa4b-4344-8f9f-868990ad1781.png)
+
 
 ```java
 C:\Users\etjav\Desktop\springcloud\JDK8\bin\com\etjava\test>javap -c -p Demo3$$Lambda$1.class
