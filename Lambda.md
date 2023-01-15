@@ -403,5 +403,68 @@ final class com.etjava.test.Demo3$$Lambda$1 implements com.etjava.lambda.Swimmab
 }
 ```
 
+## Lambda表达式省略格式
 
+lambda省略规则
+
+1 小括号内的参数类型可以省略
+
+2 如果小括号内有且仅有一个参数 那么小括号也可以省略
+
+3 如果大括号内有且仅有一个语句 可以同时省略大括号，return语句及结尾的分号
+
+省略前
+
+```
+(int a) -> {
+  return new User(a);
+}
+```
+
+省略后
+
+```
+a -> new User()
+```
+
+案例
+
+```java
+public class Demo4 {
+	
+	private static List<A> list;
+	static {
+		list = new ArrayList<>();
+		list.add(new A("Tom",12));
+		list.add(new A("Jerry",13));
+	}
+
+	public static void main(String[] args) {
+		// sort
+//		Collections.sort(list,(o1,o2) ->{
+//			return o1.age-o2.age;
+//		});
+		Collections.sort(list, (o1,o2) -> o1.age-o2.age);
+		
+		// iterator
+//		list.forEach((a)->{
+//			System.out.println(a);
+//		});
+		list.forEach(a -> System.out.println(a));
+	}
+}
+
+class A{
+	String name;
+	int age;
+	public A(String name,int age) {
+		this.name = name;
+		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "A [name=" + name + ", age=" + age + "]";
+	}
+}
+```
 
