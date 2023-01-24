@@ -1165,4 +1165,5 @@ class SumRecursiveTask extends RecursiveTask<Long>{
 	}
 }
 ```
+![9fa2735f80364b46e8f232004ccfb09](https://user-images.githubusercontent.com/47961027/214361257-c8474250-127e-4d3f-bf5f-ac1b32287a8e.png)
 
